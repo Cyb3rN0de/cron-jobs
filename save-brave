@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Original file path
+original_file="$HOME/.config/BraveSoftware/Brave-Browser/Default/Login Data"
+
+# Backup directory
+backup_dir="$HOME/tmp"
+
+# Get current date in YYYYMMDD format
+current_date=$(date +%Y%m%d)
+
+# New file name with current date
+new_file="${current_date}-brave-exp"
+
+# Check if original file exists
+if [ -f "$original_file" ]; then
+    # Check if the backup directory exists, and create it if not
+    if [ ! -d "$backup_dir" ]; then
+        mkdir -p "$backup_dir"
+        echo "Created backup directory: $backup_dir"
+    fi
+    
+    # Copy and rename the file to the backup directory
+    cp "$original_file" "$backup_dir/$new_file"
+    echo "File copied and renamed to $new_file in $backup_dir"
+else
+    echo "Original file does not exist."
+fi

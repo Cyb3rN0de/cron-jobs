@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Get current date in YYYYMMDD format
+today=$(date +%Y%m%d)
+
+# Define the backup path with the dynamic date
+backup_file=~/Obsidian/backups/${today}-obsidian-pentesting.tar.bz2
+
+# The parent directory of the directory to be backed up
+parent_dir=~/Obsidian
+
+# Directory to be backed up
+backup_dir=pentesting
+
+# Create a tar.bz2 archive of the specified directory
+tar -cjvf "$backup_file" -C "$parent_dir" "$backup_dir"
+
+# Make archive read-only
+chmod 400 ~/Obsidian/backups/${today}-obsidian-pentesting.tar.bz2
+
+# Copy to s3://matt-dump/
+aws s3 cp ~/Obsidian/backups/${today}-obsidian-pentesting.tar.bz2 s3://<bucket-name>
